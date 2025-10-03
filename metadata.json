@@ -1,0 +1,5 @@
+{
+  "name": "OptmizTool",
+  "description": "A tool to upload product images, automatically optimize them into WooCommerce-friendly sizes and formats, and export the optimized versions as a ZIP file with a performance report.",
+  "requestFramePermissions": []
+}
