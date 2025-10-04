@@ -2,7 +2,7 @@
 import React, { useMemo } from 'react';
 import type { OptimizedImage } from '../types';
 import { PRESETS } from '../constants';
-import { DownloadIcon, BackIcon, ReportIcon } from './Icons';
+import { DownloadIcon, BackIcon } from './Icons';
 
 interface ResultsViewProps {
     results: OptimizedImage[];
@@ -51,30 +51,6 @@ export const ResultsView: React.FC<ResultsViewProps> = ({ results, onReset }) =>
         document.body.removeChild(link);
     };
 
-    const handleDownloadCsv = () => {
-        const headers = "Output File,Original File,Variant,Original Size (KB),Optimized Size (KB),% Reduction\n";
-        const rows = results.map(r => {
-            const reduction = ((r.originalSize - r.optimizedSize) / r.originalSize * 100).toFixed(2);
-            return [
-                `${r.outputName}.${r.format}`,
-                r.originalName,
-                r.presetId,
-                (r.originalSize / 1024).toFixed(2),
-                (r.optimizedSize / 1024).toFixed(2),
-                reduction
-            ].join(',');
-        }).join('\n');
-
-        const csvContent = headers + rows;
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "optimization_report.csv";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
-
     return (
         <div className="max-w-7xl mx-auto">
             <div className="text-center">
@@ -107,12 +83,6 @@ export const ResultsView: React.FC<ResultsViewProps> = ({ results, onReset }) =>
                     className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                     <DownloadIcon /> Download ZIP
-                </button>
-                <button
-                    onClick={handleDownloadCsv}
-                    className="inline-flex items-center justify-center rounded-md bg-white dark:bg-gray-800 px-4 py-2.5 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
-                >
-                    <ReportIcon /> Download Report (CSV)
                 </button>
                 <button
                     onClick={onReset}

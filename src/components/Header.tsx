@@ -10,9 +10,14 @@ export const Header: React.FC = () => {
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <LogoIcon />
-                    <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    <button
+                        type="button"
+                        onClick={() => window.location.assign('/')}
+                        className="text-xl font-semibold text-gray-900 dark:text-white bg-transparent p-0 border-0 cursor-pointer focus:outline-none"
+                        aria-label="Go to home"
+                    >
                         OptmizTool
-                    </h1>
+                    </button>
                 </div>
                 <button
                     onClick={toggleTheme}
